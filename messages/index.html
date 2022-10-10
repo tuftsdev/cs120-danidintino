@@ -8,7 +8,13 @@
   <script>
     function loadMessages() {
       jsonData = '[{"id":1,"content":"Do you really want to hurt me?","username":"Boy"},{"id":2,"content":"Do you really want to make me cry?","username":"George"}]';
-      // Your code here......
+      messages = document.getElementById("messages");
+      jsonList = JSON.parse(jsonData);
+      messagesContent = ""
+      jsonList.forEach(message => {
+        messagesContent += `<p>${message.content}<span>${message.username}</span></p>`;
+      });
+      messages.innerHTML = messagesContent;
     }
   </script>
 </head>
