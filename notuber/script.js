@@ -143,8 +143,10 @@ function createVehicleMarkerInfoWindow(carMarker, car, myPosition) {
 
 function getVehicleLocations(myPosition, myMarker) {
   request = new XMLHttpRequest() 
-  request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true) 
-  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.open("POST", "https://still-oasis-01063.herokuapp.com/rides", true) 
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  request.setRequestHeader("Access-Control-Allow-Origin", "*");
+  request.setRequestHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   let closeCars = []
   request.onreadystatechange = function() {
     if (request.readyState == 4 && request.status == 200) {
@@ -169,11 +171,12 @@ function getVehicleLocations(myPosition, myMarker) {
           minCar = car
         }
       })
-
-      createInfoWindowForNearestVehicle(myPosition, myMarker, minCar, minDistance)
+      if (minCar != null) {
+        createInfoWindowForNearestVehicle(myPosition, myMarker, minCar, minDistance)
+      }
     }
 };
-  var params = "username=8SeyrexS&lat=" + myPosition.coords.latitude + "&lng=" + myPosition.coords.longitude
+  var params = "username=whocares"
   request.send(params)
 }
 document.head.appendChild(script)
