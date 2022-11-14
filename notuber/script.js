@@ -145,8 +145,6 @@ function getVehicleLocations(myPosition, myMarker) {
   request = new XMLHttpRequest() 
   request.open("POST", "https://still-oasis-01063.herokuapp.com/rides", true) 
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-  request.setRequestHeader("Access-Control-Allow-Origin", "*");
-  request.setRequestHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   let closeCars = []
   request.onreadystatechange = function() {
     if (request.readyState == 4 && request.status == 200) {
