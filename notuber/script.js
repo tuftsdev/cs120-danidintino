@@ -1,3 +1,4 @@
+
 var script = document.createElement("script");
 script.src =
   "https://maps.googleapis.com/maps/api/js?key=AIzaSyAzn1PevLXcR81ojiu1QLL1JEflG4z3bxc&callback=initMap&libraries=places";
@@ -98,7 +99,7 @@ function haversine_distance_in_miles(lat1, lon1, lat2, lon2) {
 function createInfoWindowForNearestVehicle(myPosition, myMarker, minCar, minDistance) {
   const infoWindowContent = 
   "<p>The closest vehicle to your position is ID " 
-  + minCar.id + " at (" + minCar.lat + ", " + minCar.lng 
+  + minCar._id + " at (" + minCar.lat + ", " + minCar.lng 
   + ") with a distance of " + minDistance.toFixed(2) + "mi.</p>"
 
   const infowindow = new google.maps.InfoWindow({
@@ -125,12 +126,12 @@ function createVehicleMarkerInfoWindow(carMarker, car, myPosition) {
   const distance = haversine_distance_in_miles(myPosition.coords.latitude, myPosition.coords.longitude, car.lat, car.lng)
   const infoWindowContent = 
   "<p>The distance from this vehicle " 
-  + car.id + " at (" + car.lat + ", " + car.lng 
+  + car._id + " at (" + car.lat + ", " + car.lng 
   + ") to your location is " + distance.toFixed(2) + "mi.</p>"
 
   const infowindow = new google.maps.InfoWindow({
     content: infoWindowContent,
-    ariaLabel: "Vehicle " + car.id,
+    ariaLabel: "Vehicle " + car._id,
   });
 
   carMarker.addListener("click", () => {
@@ -150,7 +151,6 @@ function getVehicleLocations(myPosition, myMarker) {
     if (request.readyState == 4 && request.status == 200) {
       let minCar = null
       let minDistance = Number.MAX_SAFE_INTEGER
-
       closeCars = JSON.parse(request.responseText)
       
       closeCars.forEach((car) => {
@@ -158,7 +158,7 @@ function getVehicleLocations(myPosition, myMarker) {
           position: { lat: car.lat, lng: car.lng },
           icon: "car.png",
           map: map,
-          markerID: car.id,
+          markerID: car._id,
         })
 
         createVehicleMarkerInfoWindow(carMarker, car, myPosition)
@@ -174,7 +174,7 @@ function getVehicleLocations(myPosition, myMarker) {
       }
     }
 };
-  var params = "username=whocares"
+  var params = "username=whocares&lat=" + myPosition.coords.latitude + "&lng=" + myPosition.coords.longitude
   request.send(params)
 }
 document.head.appendChild(script)
