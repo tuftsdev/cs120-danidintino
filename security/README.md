@@ -1,4 +1,4 @@
-** Lab 13 **
+**Lab 13**
 
 1. I believe I have correctly finished all parts of the lab 13 requirements.
 2. I worked independently on this lab.
